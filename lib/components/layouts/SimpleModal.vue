@@ -17,10 +17,18 @@ const props = defineProps({
 })
 </script>
 
+
 <template>
   <div :class="`size-${props.size}`" class="vue-modal-content">
-    <div v-if="props.title || props.showClose" class="vue-modal-header">
-      <h1 v-if="props.title" class="vue-modal-title">{{ props.title }}</h1>
+    <!-- Aggiungi controllo per lo slot header -->
+    <div v-if="props.title || props.showClose || slots.header" class="vue-modal-header">
+      <!-- Usa lo slot header se disponibile -->
+      <template v-if="slots.header">
+        <slot name="header"></slot>
+      </template>
+      <!-- Altrimenti usa il titolo predefinito -->
+      <h1 v-else-if="props.title" class="vue-modal-title">{{ props.title }}</h1>
+
       <button v-if="props.showClose" @click="closeModal()" class="vue-modal-btn-close" aria-label="Close"></button>
     </div>
 
